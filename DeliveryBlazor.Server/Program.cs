@@ -1,11 +1,12 @@
 ﻿using DeliveryAppBlazor.Infrastructure.Contexts;
+using DeliveryBlazor.Client.Services.UserClientService;
 using DeliveryBlazor.Core.Entities;
-using DeliveryBlazor.Infrastructure.Services.UserClientService;
-using DeliveryBlazor.Server.Components;
 using DeliveryBlazor.Server.Components.Account;
+using DeliveryBlazor.Server.Components;
 using DeliveryBlazor.UseCase.Features.ApplicationUsers.Handlers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,14 +16,20 @@ builder.Services.AddRazorComponents()
     .AddAuthenticationStateSerialization();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<ApplicationUserHandler>());
+builder.Services.AddMudServices();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddHttpClient<UserClientService>();
+//builder.Services.AddHttpClient<UserClientService>();
 
-
+builder.Services.AddHttpClient<UserClientService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"]); // Set this in your appsettings.json
+    client.DefaultRequestHeaders.Accept.Clear();
+    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+});
 
 builder.Services.AddScoped<IUserServices, UserClientService>();
 
@@ -38,9 +45,6 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
-
-
-
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
@@ -55,6 +59,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+
+// Add MudBlazor services
+builder.Services.AddMudServices();
 
 var app = builder.Build();
 

@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DeliveryBlazor.Infrastructure.Services
+namespace DeliveryBlazor.Client.Services
 {
     public class PaginationService : IPaginationService
     {

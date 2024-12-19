@@ -1,6 +1,6 @@
 ﻿using DeliveryBlazor.Shared.DataTransferObjects;
 
-namespace DeliveryBlazor.Infrastructure.Services.CourierService
+namespace DeliveryBlazor.Client.Services.CourierService
 {
     public interface ICourierService
     {

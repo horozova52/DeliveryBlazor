@@ -60,13 +60,18 @@ namespace DeliveryBlazor.UseCase.Features.Clients.Handlers
             if (request == null) throw new ArgumentNullException(nameof(request));
 
             var client = await _context.Clients.FindAsync(request.Id);
-            if (client == null) throw new KeyNotFoundException("Client not found");
+            if (client == null)
+            {
+                // Log the error or handle it as needed
+                return Unit.Value; // Or return a specific result indicating failure
+            }
 
             _context.Clients.Remove(client);
             await _context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }
+
 
         // Get All
         public async Task<List<ClientEntity>> Handle(GetAllClientsQuery request, CancellationToken cancellationToken)

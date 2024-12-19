@@ -1,0 +1,90 @@
+﻿@using DeliveryBlazor.Client.Services.UserClientService
+@using DeliveryBlazor.Shared.DataTransferObjects
+@using Microsoft.AspNetCore.Identity
+@using DeliveryBlazor.Core.Entities
+@using MudBlazor
+
+
+@inject IDialogService dialogService
+@inject IUserServices userService
+
+
+<MudDialog>
+    <DialogContent>
+        <EditForm Model="user" OnValidSubmit="Save">
+            <DataAnnotationsValidator />
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="user.FirstName" For="@(() => user.FirstName)" Label="FirstName" Variant="Variant.Outlined" />
+                </MudItem>
+            </MudGrid>
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="()=>Save()" Variant="Variant.Filled" Color="Color.Primary">Salvează</MudButton>
+        <MudButton OnClick="Cancel" Variant="Variant.Filled">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public string Id { get; set; }
+
+    [Parameter]
+    public Func<Task> Callback { get; set; }
+
+    public ApplicationUser user = new ApplicationUser();
+
+  
+    void Cancel() => MudDialog.Cancel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id != null)
+        {
+            user = await userService.GetUserById(Id);
+        }
+    }
+
+    private async Task Save()
+    {
+        try
+        {
+            if (!string.IsNullOrEmpty(Id))
+            {
+                // Update user if Id is provided
+                await userService.UpdateUserAsync(Id, new ApplicationUser
+                    {
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        Address = user.Address,
+                        Role = user.Role
+                    });
+            }
+            else
+            {
+                // Create new user
+                var createdId = await userService.CreateUserAndClientAsync(new ApplicationUser
+                    {
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        Address = user.Address,
+                        Role = user.Role
+                    });
+            }
+
+            // Close the dialog and invoke the callback
+            Callback?.Invoke();
+            MudDialog.Close();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+}

@@ -1,29 +1,22 @@
-﻿
-using DeliveryBlazor.Shared.DataTransferObjects;
-using DeliveryBlazor.Core.Entities;
-using System.Net.Http;
+﻿using DeliveryBlazor.Shared.DataTransferObjects;
 using System.Net.Http.Json;
-using System.Threading.Tasks;
-using System;
-using System.Collections.Generic;
 
-namespace DeliveryBlazor.Infrastructure.Services.ClientService
+namespace DeliveryBlazor.Client.Services.OrderService
 {
-    public class ClientService : IClientServices
+    public class OrderService : IOrderService
     {
         private readonly HttpClient _httpClient;
 
-        public ClientService(HttpClient httpClient)
+        public OrderService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
 
-        //get all couriers
 
-        public async Task<List<ApplicationUserDto>> GetAllClientsAsync()
+        public async Task<List<ApplicationUserDto>> GetAllOrdersAsync()
         {
             // Utilizează HttpClient pentru a apela endpoint-ul GetAllUsers
-            var response = await _httpClient.GetAsync("api/Couriers");
+            var response = await _httpClient.GetAsync("api/Orders");
 
             if (!response.IsSuccessStatusCode)
             {

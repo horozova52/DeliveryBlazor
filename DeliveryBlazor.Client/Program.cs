@@ -1,8 +1,9 @@
-using DeliveryBlazor.Infrastructure.Services.UserClientService;
+using DeliveryBlazor.Client.Services.UserClientService;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using DeliveryBlazor.Infrastructure.Services.OrderService;
-using DeliveryBlazor.Infrastructure.Services.CourierService;
-using DeliveryBlazor.Infrastructure.Services.ClientService;
+using DeliveryBlazor.Client.Services.OrderService;
+using DeliveryBlazor.Client.Services.CourierService;
+using DeliveryBlazor.Client.Services.ClientService;
+using MudBlazor.Services;
 
 
 
@@ -11,10 +12,17 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddAuthorizationCore();
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddAuthenticationStateDeserialization();
+builder.Services.AddMudServices();
 builder.Services.AddScoped<IUserServices , UserClientService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICourierService, CourierService>();
 builder.Services.AddScoped<IClientServices, ClientService>();
+builder.Services.AddScoped(sp => new HttpClient
+{
+    BaseAddress = new Uri("https://localhost:7027/api/") // ”кажите ваш серверный адрес
+});
+
+
 
 await builder.Build().RunAsync();
 

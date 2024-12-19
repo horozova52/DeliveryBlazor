@@ -1,0 +1,99 @@
+﻿@page "/managerazor"
+
+@using DeliveryBlazor.Client.Services.UserClientService
+@using DeliveryBlazor.Shared.DataTransferObjects
+@using Microsoft.AspNetCore.Identity;
+@using DeliveryBlazor.Core.Entities
+@using MudBlazor
+@using DeliveryBlazor.Server.Components.Account.Pages.NewPages
+
+
+@inject IDialogService dialogService
+@inject IUserServices userService
+
+@if (isLoading)
+{
+    <div class="progress-container">
+        <div class="progress"></div>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div style="text-align: right; margin-bottom: 20px;">
+            <button class="btn-primary" @onclick="@(() => OpenDialog())">Adauga Utilizator</button>
+        </div>
+
+        <h2>Users</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Utilizatori</th>
+                    <th>Acțiuni</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in users)
+                {
+                    <tr>
+                        <td>@user.FirstName</td>
+                        <td class="actions">
+                            <button class="btn-success" @onclick="@(() => OpenDialog(user.Id))">Editeaza</button>
+                            <button class="btn-danger" @onclick="@(() => Delete(user.Id))">Șterge</button>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    private bool isLoading = true;
+    private List<ApplicationUser> users = new List<ApplicationUser>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+        isLoading = false;
+    }
+
+    private async Task LoadData()
+    {
+
+
+        var result = await userService.GetAllApplicationUsersAsync();
+        if (result != null)
+        {
+         users = result.ToList();
+        }
+        else
+        {
+        users = new List<ApplicationUser>();
+        }
+
+        StateHasChanged();
+    }
+
+    private void OpenDialog(string id = null)
+    {
+        var parameters = new DialogParameters();
+        if (!string.IsNullOrEmpty(id))
+        {
+            parameters.Add("Id", id); // Передаем id как строку
+        }
+        parameters.Add("Callback", new Func<Task>(OnInitializedAsync));
+
+        Console.WriteLine($"Opening dialog with parameters: Id={id}");
+        dialogService.Show<AddEditUserComponent>("User Details", parameters);
+    }
+
+
+    private async Task Delete(string id)
+    {
+        await userService.DeleteUser(id);
+        await OnInitializedAsync();
+    }
+}

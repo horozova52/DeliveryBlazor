@@ -1,6 +1,6 @@
 ﻿using DeliveryBlazor.Shared.DataTransferObjects;
 
-namespace DeliveryBlazor.Infrastructure.Services.OrderService
+namespace DeliveryBlazor.Client.Services.OrderService
 {
     public interface IOrderService
     {

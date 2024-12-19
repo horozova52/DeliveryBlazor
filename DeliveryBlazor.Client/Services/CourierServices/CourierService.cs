@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 
-namespace DeliveryBlazor.Infrastructure.Services.CourierService
+namespace DeliveryBlazor.Client.Services.CourierService
 {
     public class CourierService : ICourierService
     {
