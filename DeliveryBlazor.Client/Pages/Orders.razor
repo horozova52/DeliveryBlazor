@@ -1,0 +1,48 @@
+﻿@page "/orders"
+<div class="orders-container">
+    <div class="orders-header">
+        <h1>📦 My Orders</h1>
+        <div class="order-summary">
+            <span class="badge total">🚚 Total Orders: 45</span>
+            <span class="badge delivered">✅ Delivered: 30</span>
+            <span class="badge pending">⏳ Pending: 10</span>
+            <span class="badge failed">❌ Failed: 5</span>
+        </div>
+    </div>
+
+    <!-- Filtrare -->
+    <div class="filters">
+        <input type="date" placeholder="From Date" />
+        <input type="date" placeholder="To Date" />
+        <select>
+            <option>All Statuses</option>
+            <option>Delivered</option>
+            <option>Pending</option>
+            <option>Failed</option>
+        </select>
+        <input type="text" placeholder="Search Client or Address" />
+        <button class="btn-reset">Reset Filters</button>
+    </div>
+
+    <!-- Cardul Comenzii -->
+    <div class="order-card">
+        <div class="card-header">
+            <h3>Order #12345</h3>
+            <span id="status-12345" class="status pending">⏳ Pending</span>
+        </div>
+        <div class="card-body">
+            <p><strong>Client:</strong> John Doe</p>
+            <p><strong>Address:</strong> 12 Main St, NY</p>
+            <p><strong>Estimated Delivery:</strong> 16.12.2024, 14:00</p>
+        </div>
+        <div class="card-footer">
+            <!-- Dropdown pentru selectarea statutului -->
+            <select class="status-select" onchange="updateStatus(this, 'status-12345')">
+                <option value="Pending">⏳ Pending</option>
+                <option value="Delivered">✅ Delivered</option>
+                <option value="Failed">❌ Failed</option>
+            </select>
+            <button class="btn-view-details">🔍 View Details</button>
+        </div>
+    </div>
+</div>

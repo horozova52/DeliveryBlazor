@@ -1,0 +1,50 @@
+﻿@page "/profile"
+<div class="profile-container">
+    <!-- Secțiunea Informații Utilizator -->
+    <div class="user-info">
+        <img src="/images/Avatars/10496271.jpg" alt="User Avatar" class="user-avatar">
+        <div class="user-details">
+            <h2>John Doe</h2>
+            <p>Email: <span>johndoe@example.com</span></p>
+            <p>Phone: <span>+123 456 789</span></p>
+            <p>Address: <span>12 Main Street, NY</span></p>
+        </div>
+    </div>
+
+    <!-- Statistici Comenzi -->
+    <div class="order-stats">
+        <div class="stat-box total">🚚 Total Orders: <span>45</span></div>
+        <div class="stat-box delivered">✅ Delivered: <span>30</span></div>
+        <div class="stat-box pending">⏳ Pending: <span>10</span></div>
+        <div class="stat-box failed">❌ Failed: <span>5</span></div>
+    </div>
+
+    <!-- Tabelul Comenzilor -->
+    <div class="order-history">
+        <h3>📋 Order History</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#12345</td>
+                    <td>16.12.2024, 14:00</td>
+                    <td><span class="status pending">⏳ Pending</span></td>
+                    <td><button class="btn-view-details">🔍 View Details</button></td>
+                </tr>
+                <tr>
+                    <td>#12346</td>
+                    <td>15.12.2024, 10:30</td>
+                    <td><span class="status delivered">✅ Delivered</span></td>
+                    <td><button class="btn-view-details">🔍 View Details</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

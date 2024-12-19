@@ -1,0 +1,83 @@
+﻿/* Fundal general */
+body {
+    background: linear-gradient(to right, #4b6cb7, #182848);
+    /* background: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);*/
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+/* Container principal */
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 150px;
+}
+
+/* Card principal */
+.register-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    text-align: center;
+}
+
+/* Titlu */
+.register-title {
+    margin-bottom: 20px;
+    color: blueviolet;
+    font-weight: bold;
+}
+
+/* Inputuri fără iconițe */
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: none;
+    font-size: 16px;
+    outline: none;
+}
+
+/* Buton gradient */
+.btn-register {
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(to right, #4b6cb7, #5f2c82);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+    .btn-register:hover {
+        background: #5f2c82;
+        cursor: pointer;
+    }
+
+/* Linkuri */
+.links a {
+    display: block;
+    color: blueviolet;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: color 0.3s ease;
+}
+
+    .links a:hover {
+        color: #182848;
+    }

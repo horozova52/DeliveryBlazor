@@ -1,0 +1,121 @@
+﻿
+/* Container general pentru întreaga pagină */
+.page-container {
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Imaginea din partea de sus */
+.header-image {
+    background-image: url('/images/Courier-Management-System.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+    width: 100%;
+}
+
+/* Container pentru formular și tabel */
+.form-and-table {
+    display: flex;
+    gap: 20px; /* Spațiu între formular și tabel */
+    padding: 20px;
+    align-items: flex-start; /* Aliniere la partea de sus */
+    justify-content: flex-start; /* Asigură poziționarea la stânga */
+}
+
+/* Secțiunea formularului */
+.form-section {
+    background-color: #3d007b;
+    padding: 20px;
+    width: 30%; /* Dimensiunea formularului */
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Scroll vertical pentru formular */
+    max-height: 600px;
+}
+
+/* Secțiunea tabelului */
+.table-section {
+    background-color: #fff;
+    padding: 20px;
+    width: 65%; /* Dimensiunea tabelului */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Asigură alinierea la stânga */
+    height: 100%;
+    overflow-y: auto;
+}
+
+    /* Tabel */
+    .table-section table {
+        width: 100%;
+        height: 320px;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+        .table-section table th,
+        .table-section table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .table-section table th {
+            background-color: #6c5ce7;
+            color: white;
+            text-align: center;
+        }
+
+/* Control butoane tabel */
+.table-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+/* Secțiunea butoanelor */
+.button-section {
+    display: flex;
+    justify-content: flex-start; /* Poziționează butoanele mai spre stânga */
+    gap: 120px; /* Spațiu între butoane */
+    margin-top: 20px; /* Spațiu între tabel și butoane */
+    margin-left: 50px; /* Apropie butoanele de formular și tabel */
+    padding: 50px;
+}
+
+/* Stilizare pentru buton simplu 3D */
+
+.action-button-3d {
+    background-color: #6c5ce7; /* Culoarea violetă */
+    color: white; /* Text alb */
+    padding: 10px 20px; /* Spațiu intern */
+    border-radius: 30px; /* Colțuri rotunjite */
+    font-size: 16px; /* Dimensiunea textului */
+    font-weight: bold; /* Text îngroșat */
+    text-transform: capitalize; /* Prima literă majusculă */
+    cursor: pointer; /* Schimbă cursorul la hover */
+    box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 0.6), inset 2px 2px 5px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2); /* Efect 3D simplificat */
+    border: none; /* Fără bordură */
+    transition: all 0.2s ease-in-out;
+}
+
+    /* Efect hover pentru buton */
+    .action-button-3d:hover {
+        background-color: #7e6cf0; /* Culoare mai deschisă la hover */
+        box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 0.6), inset 2px 2px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.3); /* Intensifică umbra */
+    }
+
+    /* Efect apăsare */
+    .action-button-3d:active {
+        background-color: #5a48c4; /* Culoare mai închisă la apăsare */
+        box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2), inset -2px -2px 5px rgba(255, 255, 255, 0.5); /* Umbră inversată */
+        transform: translateY(2px); /* Efect apăsare */
+    }

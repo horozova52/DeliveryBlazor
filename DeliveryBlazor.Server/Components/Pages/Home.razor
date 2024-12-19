@@ -1,0 +1,78 @@
+﻿@page "/"
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Dashboard</PageTitle>
+
+<div class="statistics-header text-center">
+    <h1>Statistics</h1>
+</div>
+
+<div class="row text-center">
+    <!-- Card for Clients -->
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <i class="bi bi-people display-4"></i>
+                <h4>Clients</h4>
+                <h5>@TotalClients</h5>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card for Couriers -->
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <i class="bi bi-truck display-4"></i>
+                <h4>Couriers</h4>
+                <h5>@TotalCouriers</h5>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card for Orders -->
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <i class="bi bi-box-seam display-4"></i>
+                <h4>Orders</h4>
+                <h5>@TotalOrders</h5>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card for Delivered Orders -->
+    <div class="col-md-3">
+        <div class="card bg-danger text-white">
+            <div class="card-body">
+                <i class="bi bi-check-circle display-4"></i>
+                <h4>Delivered</h4>
+                <h5>@DeliveredOrders</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <canvas id="ordersChart" width="800" height="400"></canvas>
+    </div>
+    <div class="col-md-6">
+        <canvas id="deliveryChart" width="800" height="400"></canvas>
+    </div>
+</div>
+
+@code {
+    private int TotalClients = 120;
+    private int TotalCouriers = 45;
+    private int TotalOrders = 450;
+    private int DeliveredOrders = 400;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializeCharts");
+        }
+    }
+}

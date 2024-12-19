@@ -1,0 +1,54 @@
+﻿@page "/delivery-history"
+<PageTitle>Delivery History</PageTitle>
+<div class="delivery-history-container">
+    <span class="total-badge">🚀 Total: 125 Deliveries</span>
+
+    <div class="filters">
+        <input type="date" placeholder="From Date" />
+        <input type="date" placeholder="To Date" />
+        <select>
+            <option value="">All Statuses</option>
+            <option value="Delivered">✅ Delivered</option>
+            <option value="Pending">⏳ Pending</option>
+            <option value="Canceled">❌ Canceled</option>
+        </select>
+        <input type="text" placeholder="Search Client or Courier" />
+        <button class="btn-reset">Reset Filters</button>
+    </div>
+
+    <!-- Tabel -->
+    <table class="delivery-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Client</th>
+                <th>Courier</th>
+                <th>Address</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>John Doe</td>
+                <td>Michael Smith</td>
+                <td>12 Main St</td>
+                <td><span class="status delivered">✅ Delivered</span></td>
+                <td>15.12.2024</td>
+                <td>
+                    <button class="btn-view">🔍</button>
+                    <button class="btn-edit">✏️</button>
+                    <button class="btn-delete">🗑️</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Footer -->
+    <div class="footer">
+        <button class="btn-export">📊 Export to Excel</button>
+        <button class="btn-export">📄 Export to PDF</button>
+    </div>
+</div>

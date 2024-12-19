@@ -1,0 +1,38 @@
+﻿@page "/order-details"
+<div class="order-details-container">
+    <!-- Header -->
+    <div class="order-header">
+        <h1>Order Details</h1>
+        <span class="order-status">⏳ Pending</span>
+    </div>
+
+    <!-- Informații despre comandă -->
+    <div class="order-info">
+        <h3>Client Information</h3>
+        <p><strong>Name:</strong> John Doe</p>
+        <p><strong>Phone:</strong> +123 456 789</p>
+        <p><strong>Email:</strong> johndoe@example.com</p>
+
+        <h3>Delivery Address</h3>
+        <p>12 Main Street, New York, NY, 10001</p>
+        <p><strong>Estimated Delivery:</strong> 16.12.2024, 14:00</p>
+    </div>
+
+    <!-- Harta -->
+    <div class="map-section">
+        <iframe src="https://www.google.com/maps?q=12+Main+Street,New+York,NY&output=embed"></iframe>
+    </div>
+
+    <!-- Acțiuni Curier -->
+    <div class="order-actions">
+        <button class="btn-action btn-delivered">✅ Mark as Delivered</button>
+        <button class="btn-action btn-failed">❌ Report Failed Delivery</button>
+    </div>
+
+    <!-- Note Suplimentare -->
+    <div class="order-notes">
+        <h3>Add Notes</h3>
+        <textarea rows="4" placeholder="Add comments..."></textarea>
+        <button class="btn-save-note">Save Note</button>
+    </div>
+</div>
