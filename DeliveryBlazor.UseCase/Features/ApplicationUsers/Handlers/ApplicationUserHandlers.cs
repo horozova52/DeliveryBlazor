@@ -39,10 +39,10 @@ namespace DeliveryBlazor.UseCase.Features.ApplicationUsers.Handlers
         }
 
         // Get All Users
-   /*     public async Task<List<ApplicationUser>> Handle(GetAllApplicationUsersQuery request, CancellationToken cancellationToken)
+        public async Task<List<ApplicationUser>> Handle(GetAllApplicationUsersQuery request, CancellationToken cancellationToken)
         {
             return await _userManager.Users.ToListAsync(cancellationToken);
-        }*/
+        }
 
         // Get User By Id
         public async Task<ApplicationUser> Handle(GetApplicationUserByIdQuery request, CancellationToken cancellationToken)

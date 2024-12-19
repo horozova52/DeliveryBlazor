@@ -13,28 +13,28 @@ namespace DeliveryBlazor.UseCase.Features.ApplicationUsers.Queries
     }
 
     // Handler pentru Query
-    public class GetNotPaginatedApplicationUsersQueryHandler
+    public class GetAllApplicationUsersQueryHandler
         : IRequestHandler<GetAllApplicationUsersQuery, List<ApplicationUserDto>>
     {
-        private readonly UserManager<ApplicationUserDto> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public GetNotPaginatedApplicationUsersQueryHandler(UserManager<ApplicationUserDto> userManager)
+        public GetAllApplicationUsersQueryHandler(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
         }
 
         public async Task<List<ApplicationUserDto>> Handle(GetAllApplicationUsersQuery request, CancellationToken cancellationToken)
         {
+            // Obține utilizatorii din UserManager
             var users = await _userManager.Users.ToListAsync(cancellationToken);
 
-            // Mapează utilizatorii în DTO
+            // Mapează utilizatorii în DTO-uri
             return users.Select(user => new ApplicationUserDto
             {
-                
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Address = user.Address,
-                Role = user.Role
+                Role = user.Role 
             }).ToList();
         }
     }
