@@ -6,14 +6,14 @@ using Microsoft.AspNetCore.Identity;
 namespace DeliveryBlazor.UseCase.Features.Couriers.Queries
 {
     // Query pentru a obține lista de utilizatori
-    public class GetAllCouriersQuery : IRequest<List<ApplicationUserDto>>
+    public class GetAllCouriersQuery : IRequest<List<ApplicationUser>>
     {
         public GetAllCouriersQuery() { }
     }
 
     // Handler pentru Query
     public class GetNotPaginatedCouriersQueryHandler
-        : IRequestHandler<GetAllCouriersQuery, List<ApplicationUserDto>>
+        : IRequestHandler<GetAllCouriersQuery, List<ApplicationUser>>
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
@@ -22,7 +22,7 @@ namespace DeliveryBlazor.UseCase.Features.Couriers.Queries
             _userManager = userManager;
         }
 
-        public async Task<List<ApplicationUserDto>> Handle(
+        public async Task<List<ApplicationUser>> Handle(
              GetAllCouriersQuery request, CancellationToken cancellationToken)
         {
             // Filtrare utilizatori cu rolul de Curier
@@ -30,7 +30,7 @@ namespace DeliveryBlazor.UseCase.Features.Couriers.Queries
                 .Where(user => user.Role == DeliveryBlazor.Shared.Enums.UserRole.Courier);
 
             // Mapare în DTO
-            var couriers = users.Select(user => new ApplicationUserDto
+            var couriers = users.Select(user => new ApplicationUser
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,

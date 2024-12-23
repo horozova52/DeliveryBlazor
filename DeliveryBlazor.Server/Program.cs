@@ -1,5 +1,7 @@
 ﻿using DeliveryAppBlazor.Infrastructure.Contexts;
 using DeliveryBlazor.Client.Services.UserClientService;
+using DeliveryBlazor.Client.Services.CourierService;
+using DeliveryBlazor.Client.Services.ClientService;
 using DeliveryBlazor.Core.Entities;
 using DeliveryBlazor.Server.Components.Account;
 using DeliveryBlazor.Server.Components;
@@ -32,6 +34,10 @@ builder.Services.AddHttpClient<UserClientService>(client =>
 });
 
 builder.Services.AddScoped<IUserServices, UserClientService>();
+
+builder.Services.AddScoped<ICourierService, CourierService>();
+
+builder.Services.AddScoped<IClientServices, ClientService>();
 
 // Configure Identity (DOAR ACEASTĂ CONFIGURARE)
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>

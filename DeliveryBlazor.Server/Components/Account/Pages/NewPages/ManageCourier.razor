@@ -1,6 +1,6 @@
-﻿@page "/managerazor"
+﻿@page "/managecourier"
 
-@using DeliveryBlazor.Client.Services.UserClientService
+@using DeliveryBlazor.Client.Services.CourierService
 @using DeliveryBlazor.Shared.DataTransferObjects
 @using Microsoft.AspNetCore.Identity;
 @using DeliveryBlazor.Core.Entities
@@ -9,7 +9,7 @@
 
 
 @inject IDialogService dialogService
-@inject IUserServices userService
+@inject ICourierService courierService
 
 @if (isLoading)
 {
@@ -24,7 +24,7 @@ else
             <button class="btn-primary" @onclick="@(() => OpenDialog())">Adauga Utilizator</button>
         </div>
 
-        <h2>All Users</h2>
+        <h2>Couriers</h2>
 
         <table class="table">
             <thead>
@@ -40,7 +40,7 @@ else
                         <td>@user.FirstName</td>
                         <td class="actions">
                             <button class="btn-success" @onclick="@(() => OpenDialog(user.Id))">Editeaza</button>
-                            <button class="btn-danger" @onclick="@(() => Delete(user.Id))">Șterge</button>
+                             <button class="btn-danger" @onclick="@(() => Delete(user.Id))">Șterge</button> 
 
                         </td>
                     </tr>
@@ -64,14 +64,14 @@ else
     {
 
 
-        var result = await userService.GetAllApplicationUsersAsync();
+        var result = await courierService.GetAllCouriersAsync();
         if (result != null)
         {
-         users = result.ToList();
+            users = result.ToList();
         }
         else
         {
-        users = new List<ApplicationUser>();
+            users = new List<ApplicationUser>();
         }
 
         StateHasChanged();
@@ -93,7 +93,7 @@ else
 
     private async Task Delete(string id)
     {
-        await userService.DeleteUser(id);
+        await courierService.DeleteCourierAsync(id);
         await OnInitializedAsync();
     }
 }

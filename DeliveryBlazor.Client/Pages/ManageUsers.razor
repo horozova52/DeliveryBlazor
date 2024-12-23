@@ -1,11 +1,5 @@
 ﻿@page "/manage-users"
 
-@using DeliveryBlazor.Shared.DataTransferObjects.Pagination;
-@using DeliveryBlazor.Shared.DataTransferObjects
-@using DeliveryBlazor.Client.Services;
-@using DeliveryBlazor.Client.Services.UserClientService;
-@inject IUserServices userservice;
-
 @inherits LayoutComponentBase
 <PageTitle>Manage Users</PageTitle>
 
@@ -66,12 +60,5 @@
             </tbody>
         </table>
     </div>
-   
-
-
 </div>
 
-@code
-{
-    
-}
