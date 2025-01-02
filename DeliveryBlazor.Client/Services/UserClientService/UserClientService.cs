@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using DeliveryBlazor.UseCase.Features.ApplicationUsers.Queries;
 using DeliveryBlazor.UseCase.Features.ApplicationUsers.Commands;
+using System.Text.Json;
 
 namespace DeliveryBlazor.Client.Services.UserClientService
 {
@@ -56,9 +57,24 @@ namespace DeliveryBlazor.Client.Services.UserClientService
             {
                 throw new Exception($"Failed to delete users. Status Code: {response.StatusCode}");
             }
-            
-            return await response.Content.ReadFromJsonAsync<Guid>();
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+            {
+                return Guid.Empty;
+            }
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Response Content: {responseContent}");
+
+            if (string.IsNullOrWhiteSpace(responseContent))
+            {
+                throw new Exception("Response content is empty.");
+            }
+
+            return JsonSerializer.Deserialize<Guid>(responseContent);
         }
+
+
 
         //update
         public async Task UpdateUserAsync(string id, ApplicationUser user)
