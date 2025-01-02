@@ -32,6 +32,12 @@
                 <InputText @bind-Value="Input.Email" class="form-control input-field" placeholder="Email Address" />
             </div>
 
+
+            <!-- FirstName Input -->
+            <div class="input-group mb-3">
+                <InputText @bind-Value="Input.FirstName" class="form-control input-field" placeholder="First Name" />
+            </div>
+
             <!-- Password Input -->
             <div class="input-group mb-3">
                 <InputText type="password" @bind-Value="Input.Password" class="form-control input-field" placeholder="Password" />
@@ -69,6 +75,10 @@
     public async Task RegisterUser(EditContext editContext)
     {
         var user = CreateUser();
+
+        user.Address = string.Empty;
+        user.FirstName = Input.FirstName;
+        user.LastName = string.Empty;
 
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
         var emailStore = GetEmailStore();
@@ -131,6 +141,10 @@
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; } = "";
+
+        [Required]
+        [Display(Name = "FirstName")]
+        public string FirstName { get; set; } = "";
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]

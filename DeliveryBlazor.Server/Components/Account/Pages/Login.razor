@@ -46,7 +46,6 @@
     </div>
 </div>
 
-
 @code {
     private string? errorMessage;
 
@@ -70,18 +69,28 @@
 
     public async Task LoginUser()
     {
-        try
+        // This doesn't count login failures towards account lockout
+        // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+        var result = await SignInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+        if (result.Succeeded)
         {
-            var result = await SignInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-            Logger.LogInformation("User attempted to log in.");
+            Logger.LogInformation("User logged in.");
+            RedirectManager.RedirectTo(ReturnUrl);
         }
-        catch (Exception ex)
+        else if (result.RequiresTwoFactor)
         {
-            Logger.LogError($"Login error: {ex.Message}");
+            RedirectManager.RedirectTo(
+                "Account/LoginWith2fa",
+                new() { ["returnUrl"] = ReturnUrl, ["rememberMe"] = Input.RememberMe });
         }
-        finally
+        else if (result.IsLockedOut)
         {
-            NavigationManager.NavigateTo("/manage-users");
+            Logger.LogWarning("User account locked out.");
+            RedirectManager.RedirectTo("Account/Lockout");
+        }
+        else
+        {
+            errorMessage = "Error: Invalid login attempt.";
         }
     }
 

@@ -35,6 +35,7 @@ namespace DeliveryBlazor.UseCase.Features.ApplicationUsers.Queries
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Address = user.Address,
+                Email= user.Email,
                 Role = user.Role 
             }).ToList();
         }
