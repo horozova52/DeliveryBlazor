@@ -23,7 +23,6 @@ namespace DeliveryBlazor.Client.Services.UserClientService
 
         public async Task<Guid> CreateUserAndClientAsync(ApplicationUser user)
         {
-            // Apelează endpoint-ul pentru a crea utilizatorul și clientul asociat
             var result = await _httpClient.PostAsJsonAsync("https://localhost:7027/api/ApplicationUser", user);
 
             if (!result.IsSuccessStatusCode)
@@ -39,7 +38,7 @@ namespace DeliveryBlazor.Client.Services.UserClientService
 
         public async Task<List<ApplicationUser>> GetAllApplicationUsersAsync()
         {
-            // Utilizează HttpClient pentru a apela endpoint-ul GetAllUsers
+            
             var response = await _httpClient.GetAsync("https://localhost:7027/api/ApplicationUser/list");
             if (!response.IsSuccessStatusCode)
             {
@@ -79,13 +78,11 @@ namespace DeliveryBlazor.Client.Services.UserClientService
         //update
         public async Task UpdateUserAsync(string id, ApplicationUser user)
         {
-            // Убедимся, что ID в команде совпадает
+            
             user.Id = id;
 
-            // Отправка PUT-запроса на API
             var response = await _httpClient.PutAsJsonAsync($"https://localhost:7027/api/ApplicationUser/{id}", user);
 
-            // Проверка успешности запроса
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"Failed to update user with ID {id}. Status Code: {response.StatusCode}");
@@ -96,16 +93,12 @@ namespace DeliveryBlazor.Client.Services.UserClientService
         //byid
         public async Task<ApplicationUser> GetUserById(string id)
         {
-            // Отправка запроса на API
             var response = await _httpClient.GetAsync($"https://localhost:7027/api/ApplicationUser/{id}");
 
-            // Проверка успешности запроса
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"Failed to get user with ID {id}. Status Code: {response.StatusCode}");
             }
-
-            // Десериализация ответа в объект ApplicationUser
             var user = await response.Content.ReadFromJsonAsync<ApplicationUser>();
             if (user == null)
             {

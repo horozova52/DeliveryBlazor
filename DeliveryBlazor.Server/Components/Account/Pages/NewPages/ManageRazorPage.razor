@@ -12,6 +12,9 @@
 @inject IDialogService dialogService
 @inject IUserServices userService
 
+
+<MudDialogProvider />
+
 @if (isLoading)
 {
     <div class="progress-container">
@@ -85,7 +88,7 @@ else
         var parameters = new DialogParameters();
         if (!string.IsNullOrEmpty(id))
         {
-            parameters.Add("Id", id); // Передаем id как строку
+            parameters.Add("Id", id); 
         }
         parameters.Add("Callback", new Func<Task>(OnInitializedAsync));
 
