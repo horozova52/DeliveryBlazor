@@ -38,6 +38,12 @@
                 <InputText @bind-Value="Input.FirstName" class="form-control input-field" placeholder="First Name" />
             </div>
 
+            <!-- LastName Input -->
+
+            <div class="input-group mb-3">
+                <InputText @bind-Value="Input.LastName" class="form-control input-field" placeholder="Last Name" />
+            </div>
+
             <!-- Password Input -->
             <div class="input-group mb-3">
                 <InputText type="password" @bind-Value="Input.Password" class="form-control input-field" placeholder="Password" />
@@ -78,7 +84,8 @@
 
         user.Address = string.Empty;
         user.FirstName = Input.FirstName;
-        user.LastName = string.Empty;
+       
+        user.LastName = Input.LastName;
 
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
         var emailStore = GetEmailStore();
@@ -145,6 +152,10 @@
         [Required]
         [Display(Name = "FirstName")]
         public string FirstName { get; set; } = "";
+
+        [Required]
+        [Display(Name = "LastName")]
+        public string LastName { get; set; } = "";
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]

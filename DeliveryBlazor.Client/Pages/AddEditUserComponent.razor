@@ -4,24 +4,28 @@
 @using DeliveryBlazor.Core.Entities
 @using MudBlazor
 
-
 @inject IDialogService dialogService
 @inject IUserServices userService
-
 
 <MudDialog>
     <DialogContent>
         <EditForm Model="user" OnValidSubmit="Save">
             <DataAnnotationsValidator />
             <MudGrid>
+             @*    <MudItem xs="12">
+                    <MudTextField @bind-Value="user.FirstName" For="@(() => user.FirstName)" Label="First Name" Variant="Variant.Outlined" />
+                </MudItem> *@
                 <MudItem xs="12">
-                    <MudTextField @bind-Value="user.FirstName" For="@(() => user.FirstName)" Label="FirstName" Variant="Variant.Outlined" />
+                    <MudTextField @bind-Value="user.LastName" For="@(() => user.LastName)" Label="Last Name" Variant="Variant.Outlined" />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="user.Email" For="@(() => user.Email)" Label="Email" Variant="Variant.Outlined" />
                 </MudItem>
             </MudGrid>
         </EditForm>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="()=>Save()" Variant="Variant.Filled" Color="Color.Primary">Salvează</MudButton>
+        <MudButton OnClick="()=>Save()" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
         <MudButton OnClick="Cancel" Variant="Variant.Filled">Cancel</MudButton>
     </DialogActions>
 </MudDialog>
@@ -38,14 +42,46 @@
 
     public ApplicationUser user = new ApplicationUser();
 
-  
     void Cancel() => MudDialog.Cancel();
 
     protected override async Task OnInitializedAsync()
     {
-        if (Id != null)
+        Console.WriteLine($"[AddEditUserComponent] OnInitializedAsync called with Id = {Id}");
+
+        if (!string.IsNullOrEmpty(Id))
         {
             user = await userService.GetUserById(Id);
+            Console.WriteLine($"[DEBUG] Fetched user: {user.FirstName}, {user.LastName}, {user.Email}");
+
+
+
+            if (user == null)
+            {
+                Console.WriteLine($"[AddEditUserComponent] User with Id={Id} not found. Creating empty user.");
+                user = new ApplicationUser
+                    {
+                       /// FirstName = string.Empty,
+                        LastName = string.Empty,
+                        Email = string.Empty
+                    };
+            }
+            else
+            {
+                Console.WriteLine($"[AddEditUserComponent] User found with Id={user.Id}");
+               /// Console.WriteLine($"  FirstName: {user.FirstName}");
+                Console.WriteLine($"  LastName: {user.LastName}");
+                Console.WriteLine($"  Email: {user.Email}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("[AddEditUserComponent] Id is null or empty => Adding new user mode.");
+            user = new ApplicationUser
+                {
+                  ///  FirstName = string.Empty,
+                    LastName = string.Empty,
+                    Email = string.Empty
+                };
         }
     }
 
@@ -53,38 +89,26 @@
     {
         try
         {
+            Console.WriteLine($"[AddEditUserComponent] Save called. Id={(string.IsNullOrEmpty(Id) ? "NEW" : Id)}");
+           /// Console.WriteLine($"  FirstName: {user.FirstName}");
+            Console.WriteLine($"  LastName:  {user.LastName}");
+            Console.WriteLine($"  Email:     {user.Email}");
+
             if (!string.IsNullOrEmpty(Id))
             {
-                // Update user if Id is provided
-                await userService.UpdateUserAsync(Id, new ApplicationUser
-                    {
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Email = user.Email,
-                        Address = user.Address,
-                        Role = user.Role
-                    });
+                await userService.UpdateUserAsync(Id, user);
             }
             else
             {
-                // Create new user
-                var createdId = await userService.CreateUserAndClientAsync(new ApplicationUser
-                    {
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Email = user.Email,
-                        Address = user.Address,
-                        Role = user.Role
-                    });
+                await userService.CreateUserAndClientAsync(user);
             }
 
-            // Close the dialog and invoke the callback
             Callback?.Invoke();
             MudDialog.Close();
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error: {ex.Message}");
+            Console.WriteLine($"[AddEditUserComponent] Error on save: {ex.Message}");
         }
     }
 }

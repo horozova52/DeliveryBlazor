@@ -32,13 +32,8 @@ namespace DeliveryBlazor.Client.Services.UserClientService
             return userId;
         }
 
-
-
-        //get all aplication users
-
         public async Task<List<ApplicationUser>> GetAllApplicationUsersAsync()
         {
-            
             var response = await _httpClient.GetAsync("https://localhost:7027/api/ApplicationUser/list");
             if (!response.IsSuccessStatusCode)
             {
@@ -48,7 +43,6 @@ namespace DeliveryBlazor.Client.Services.UserClientService
             return users ?? new List<ApplicationUser>();
         }
 
-        //delete 
         public async Task<Guid> DeleteUser(string id)
         {
             var response = await _httpClient.DeleteAsync($"https://localhost:7027/api/ApplicationUser/{id}");
@@ -73,24 +67,34 @@ namespace DeliveryBlazor.Client.Services.UserClientService
             return JsonSerializer.Deserialize<Guid>(responseContent);
         }
 
-
-
-        //update
         public async Task UpdateUserAsync(string id, ApplicationUser user)
         {
-            
+            // Asigură-te că ID-ul în comandă corespunde
             user.Id = id;
 
+            // Setează UserName dacă nu este deja setat
+            if (string.IsNullOrWhiteSpace(user.UserName))
+            {
+                // Setează UserName la o valoare implicită sau obține-l dintr-o altă sursă
+                user.UserName = "defaultUserName"; // Înlocuiește cu valoarea corectă
+            }
+
+            // Logare date trimise
+            Console.WriteLine($"Updating user with ID: {id}");
+            Console.WriteLine($"User Data: {JsonSerializer.Serialize(user)}");
+
+            // Trimitere cerere PUT către API
             var response = await _httpClient.PutAsJsonAsync($"https://localhost:7027/api/ApplicationUser/{id}", user);
 
+            // Verificare succes cerere
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception($"Failed to update user with ID {id}. Status Code: {response.StatusCode}");
+                var errorContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Error Content: {errorContent}");
+                throw new Exception($"Failed to update user with ID {id}. Status Code: {response.StatusCode}, Error: {errorContent}");
             }
         }
 
-
-        //byid
         public async Task<ApplicationUser> GetUserById(string id)
         {
             var response = await _httpClient.GetAsync($"https://localhost:7027/api/ApplicationUser/{id}");
@@ -107,7 +111,5 @@ namespace DeliveryBlazor.Client.Services.UserClientService
 
             return user;
         }
-
-
     }
 }
