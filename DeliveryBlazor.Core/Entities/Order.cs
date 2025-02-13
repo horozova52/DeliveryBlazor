@@ -1,4 +1,4 @@
-﻿using DeliveryBlazor.Core.Entities;
+﻿using DeliveryBlazor.Shared.Enums;
 
 namespace DeliveryBlazor.Core.Entities
 {

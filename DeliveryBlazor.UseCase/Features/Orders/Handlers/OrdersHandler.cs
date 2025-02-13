@@ -11,7 +11,7 @@ namespace DeliveryBlazor.UseCase.Features.Orders.Handlers
         IRequestHandler<CreateOrderCommand, Guid>,
         IRequestHandler<UpdateOrderCommand, Unit>,
         IRequestHandler<DeleteOrderCommand, Unit>,
-        //IRequestHandler<GetAllOrdersQuery, List<Order>>,
+       // IRequestHandler<GetAllOrdersQuery, List<Order>>,
         IRequestHandler<GetOrderByIdQuery, Order>
     {
         private readonly ApplicationDbContext _context;

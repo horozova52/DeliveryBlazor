@@ -13,6 +13,7 @@
 @inject IUserServices userService
 
 
+
 <MudDialogProvider />
 
 @if (isLoading)
@@ -24,12 +25,10 @@
 else
 {
     <div class="container">
-            <div style="text-align: right; margin-bottom: 20px;">
+        <div style="text-align: right; margin-bottom: 20px;">
             <button class="btn-primary" @onclick="OpenAddUserDialog">Adauga Utilizator</button>
         </div>
-
         <h2>All Users</h2>
-
         <table class="table">
             <thead>
                 <tr>
@@ -48,19 +47,18 @@ else
                         <td>@user.Email</td>
                         <td class="actions">
                             <button class="btn-success" @onclick="@(() => OpenEditUserDialog(user.Id))">Editeaza</button>
-                            <button class="btn-danger" @onclick="@(() => Delete(user.Id))">Șterge</button>
+                            <button class="btn-danger" @onclick="@(() => DeleteUser(user.Id))">Șterge</button>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-
     </div>
 }
 
 @code {
     private bool isLoading = true;
-    private List<ApplicationUser> users = new List<ApplicationUser>();
+    private List<ApplicationUserDto> users = new List<ApplicationUserDto>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -70,47 +68,32 @@ else
 
     private async Task LoadData()
     {
-
-
         var result = await userService.GetAllApplicationUsersAsync();
-        if (result != null)
-        {
-         users = result.ToList();
-        }
-        else
-        {
-        users = new List<ApplicationUser>();
-        }
-
-        StateHasChanged();
+        users = result ?? new List<ApplicationUserDto>();
     }
-
 
     private void OpenAddUserDialog()
     {
         var parameters = new DialogParameters
-    {
-        { "Callback", new Func<Task>(OnInitializedAsync) }
-    };
-
+        {
+            { "Callback", new Func<Task>(LoadData) }
+        };
         dialogService.Show<AddEditUserComponent>("Add User", parameters);
     }
 
     private void OpenEditUserDialog(string id)
     {
         var parameters = new DialogParameters
-    {
-        { "Id", id }, 
-        { "Callback", new Func<Task>(OnInitializedAsync) }
-    };
-
+        {
+            { "Id", id },
+            { "Callback", new Func<Task>(LoadData) }
+        };
         dialogService.Show<AddEditUserComponent>("Edit User", parameters);
     }
 
-
-    private async Task Delete(string id)
+    private async Task DeleteUser(string id)
     {
         await userService.DeleteUser(id);
-        await OnInitializedAsync();
+        await LoadData();
     }
 }
