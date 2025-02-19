@@ -14,7 +14,7 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddAuthenticationStateDeserialization();
 builder.Services.AddMudServices();
 builder.Services.AddScoped<IUserServices , UserClientService>();
-builder.Services.AddScoped<IOrderService, OrderService>();
+///builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<OrderService>();
 
 builder.Services.AddScoped<ICourierService, CourierService>();

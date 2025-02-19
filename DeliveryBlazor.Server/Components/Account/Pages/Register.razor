@@ -84,7 +84,7 @@
 
         user.Address = string.Empty;
         user.FirstName = Input.FirstName;
-       
+
         user.LastName = Input.LastName;
 
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
