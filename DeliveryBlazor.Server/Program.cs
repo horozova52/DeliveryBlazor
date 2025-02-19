@@ -98,5 +98,7 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddAdditionalAssemblies(typeof(DeliveryBlazor.Client._Imports).Assembly);
 
+app.MapAdditionalIdentityEndpoints();
+
 app.MapControllers();
 app.Run();

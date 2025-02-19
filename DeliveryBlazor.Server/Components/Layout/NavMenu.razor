@@ -79,7 +79,7 @@
                     </NavLink>
                 </div>
                 <div class="nav-item px-3">
-                    <form action="/Logout" method="post">
+                    <form action="/Account/Logout" method="post">
                         <AntiforgeryToken />
                         <input type="hidden" name="ReturnUrl" value="@currentUrl" />
                         <button type="submit" class="nav-link">
