@@ -1,8 +1,0 @@
-﻿namespace DeliveryBlazor.Client.Services.EmailServices
-{
-    public interface IEmailSender
-    {
-        Task SendEmailAsync(string email, string subject, string message);
-    }
-
-}

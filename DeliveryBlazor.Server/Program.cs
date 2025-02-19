@@ -9,6 +9,7 @@ using DeliveryBlazor.UseCase.Features.ApplicationUsers.Handlers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
+using DeliveryBlazor.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,8 +66,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
-
+builder.Services.AddScoped<IEmailSender<ApplicationUser>, SmtpEmailSender>();
 // Add MudBlazor services
 builder.Services.AddMudServices();
 
