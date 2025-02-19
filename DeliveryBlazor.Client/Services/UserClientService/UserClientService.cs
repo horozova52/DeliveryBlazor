@@ -21,14 +21,18 @@ namespace DeliveryBlazor.Client.Services.UserClientService
             _httpClient = httpClient;
         }
 
-        public async Task<Guid> CreateUserAndClientAsync(ApplicationUserDto user)
+        public async Task<Guid> CreateUserAndClientAsync(ApplicationUserDto user, string? password = null)
         {
-           
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                password = "Parola123!";
+            }
+
             var command = new CreateApplicationUserCommand
             {
                 UserName = user.Email, 
                 Email = user.Email,
-                Password = "Parola123!",
+                Password = password,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Address = user.Address ?? "",

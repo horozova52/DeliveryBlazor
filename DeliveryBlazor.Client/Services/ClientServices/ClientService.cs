@@ -20,7 +20,7 @@ namespace DeliveryBlazor.Client.Services.ClientService
 
         //get all couriers
 
-        public async Task<List<ApplicationUser>> GetAllClientsAsync()
+        public async Task<List<ApplicationUserDto>> GetAllClientsAsync()
         {
             // Utilizează HttpClient pentru a apela endpoint-ul GetAllUsers
             var response = await _httpClient.GetAsync("https://localhost:7027/api/Clients");
@@ -30,8 +30,8 @@ namespace DeliveryBlazor.Client.Services.ClientService
                 throw new Exception($"Failed to fetch users. Status Code: {response.StatusCode}");
             }
 
-            var users = await response.Content.ReadFromJsonAsync<List<ApplicationUser>>();
-            return users ?? new List<ApplicationUser>();
+            var users = await response.Content.ReadFromJsonAsync<List<ApplicationUserDto>>();
+            return users ?? new List<ApplicationUserDto>();
         }
         public async Task DeleteClientAsync(string id)
         {
